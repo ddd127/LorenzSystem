@@ -30,7 +30,7 @@ public class MainWindow extends JFrame {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
                 int code = keyEvent.getKeyCode();
-                synchronized (line) {
+//                synchronized (line) {
                     switch (code) {
                         case KeyEvent.VK_EQUALS:
                             view.zoomUp();
@@ -63,7 +63,7 @@ public class MainWindow extends JFrame {
                             view.camRight();
                             break;
                     }
-                }
+//                }
             }
 
             @Override

@@ -31,42 +31,62 @@ public class View extends JPanel {
     }
 
     public void moveUp() {
-        camera.moveUp();
+        synchronized (points) {
+            camera.moveUp();
+        }
     }
 
     public void moveDown() {
-        camera.moveDown();
+        synchronized (points) {
+            camera.moveDown();
+        }
     }
 
     public void moveRight() {
-        camera.moveRight();
+        synchronized (points) {
+            camera.moveRight();
+        }
     }
 
     public void moveLeft() {
-        camera.moveLeft();
+        synchronized (points) {
+            camera.moveLeft();
+        }
     }
 
     public void zoomUp() {
-        camera.zoomUp();
+        synchronized (points) {
+            camera.zoomUp();
+        }
     }
 
     public void zoomDown() {
-        camera.zoomDown();
+        synchronized (points) {
+            camera.zoomDown();
+        }
     }
 
     public void camUp() {
-        camera.camUp();
+        synchronized (points) {
+            camera.camUp();
+        }
     }
 
     public void camDown() {
-        camera.camDown();
+        synchronized (points) {
+            camera.camDown();
+        }
     }
 
     public void camRight() {
-        camera.camRight();
+        synchronized (points) {
+            camera.camRight();
+        }
     }
 
     public void camLeft() {
-        camera.camLeft();
+        synchronized (points) {
+            camera.camLeft();
+        }
     }
 }
