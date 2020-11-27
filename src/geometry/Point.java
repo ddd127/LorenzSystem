@@ -1,9 +1,9 @@
 package geometry;
 
 public class Point {
-    public final double x;
-    public final double y;
-    public final double z;
+    public double x;
+    public double y;
+    public double z;
 
     public Point(double x, double y, double z) {
         this.x = x;
@@ -11,7 +11,9 @@ public class Point {
         this.z = z;
     }
 
-    public Point move(Vector vector) {
-        return new Point(vector.x + x, vector.y + y, vector.z + z);
+    public void move(Vector vector, double k) {
+        x += vector.x * k;
+        y += vector.y * k;
+        z += vector.z * k;
     }
 }

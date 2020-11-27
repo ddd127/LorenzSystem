@@ -1,9 +1,9 @@
 package geometry;
 
 public class Vector {
-    public final double x;
-    public final double y;
-    public final double z;
+    public double x;
+    public double y;
+    public double z;
 
     public Vector(double x, double y, double z) {
         this.x = x;
@@ -20,13 +20,18 @@ public class Vector {
         return new Vector(-x, -y, -z);
     }
 
-    public static Vector moveAtoBonGrad(Vector a, Vector b, int grad) {
-        return new Vector((90 - grad) * a.x + grad * b.x,
+    public static void moveAtoBonGrad(Vector a, Vector b, int grad) {
+        Vector newA = new Vector((90 - grad) * a.x + grad * b.x,
                 (90 - grad) * a.y + grad * b.y,
                 (90 - grad) * a.z + grad * b.z).normalize();
-    }
-
-    public static Vector moveBfromAonGrad(Vector a, Vector b, int grad) {
-        return moveAtoBonGrad(b, a.negate(), grad);
+        Vector newB = new Vector((90 - grad) * b.x - grad * a.x,
+                (90 - grad) * b.y - grad * a.y,
+                (90 - grad) * b.z - grad * a.z).normalize();
+        a.x = newA.x;
+        a.y = newA.y;
+        a.z = newA.z;
+        b.x = newB.x;
+        b.y = newB.y;
+        b.z = newB.z;
     }
 }

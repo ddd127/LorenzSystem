@@ -92,8 +92,8 @@ public class Model implements Runnable {
         int sleep;
         while (true) {
             synchronized (line) {
-                generate(line, line.back(), 100);
-                sleep = 15 - line.size() / 10_000;
+                generate(line, line.back(), 50);
+                sleep = 15 - line.size() / 5_000;
             }
             view.repaint();
             try {

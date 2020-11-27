@@ -8,8 +8,9 @@ public class Camera {
     private static final Vector Y = new Vector(0., 1., 0.);
     private static final Vector Z = new Vector(0., 0., 1.);
 
-    private static final int ROTATE_ANGLE = 3;
+    private static final int ROTATE_ANGLE = 2;
     private static final double ZOOM_MUL = 1.05;
+    private static final double MOVE_SPEED = 0.7;
 
     private Point position;
     private Vector view;
@@ -57,19 +58,19 @@ public class Camera {
     }
 
     public void moveUp() {
-        position = position.move(top);
+        position.move(top, MOVE_SPEED);
     }
 
     public void moveDown() {
-        position = position.move(top.negate());
+        position.move(top.negate(), MOVE_SPEED);
     }
 
     public void moveRight() {
-        position = position.move(right.negate());
+        position.move(right.negate(), MOVE_SPEED);
     }
 
     public void moveLeft() {
-        position = position.move(right);
+        position.move(right, MOVE_SPEED);
     }
 
     public void zoomUp() {
@@ -81,30 +82,18 @@ public class Camera {
     }
 
     public void camUp() {
-        Vector newView = Vector.moveAtoBonGrad(view, top, ROTATE_ANGLE);
-        Vector newTop = Vector.moveBfromAonGrad(view, top, ROTATE_ANGLE);
-        view = newView;
-        top = newTop;
+        Vector.moveAtoBonGrad(view, top, ROTATE_ANGLE);
     }
 
     public void camDown() {
-        Vector newView = Vector.moveBfromAonGrad(top, view, ROTATE_ANGLE);
-        Vector newTop = Vector.moveAtoBonGrad(top, view, ROTATE_ANGLE);
-        view = newView;
-        top = newTop;
+        Vector.moveAtoBonGrad(top, view, ROTATE_ANGLE);
     }
 
     public void camRight() {
-        Vector newView = Vector.moveAtoBonGrad(view, right, ROTATE_ANGLE);
-        Vector newRight = Vector.moveBfromAonGrad(view, right, ROTATE_ANGLE);
-        view = newView;
-        right = newRight;
+        Vector.moveAtoBonGrad(right, view, ROTATE_ANGLE);
     }
 
     public void camLeft() {
-        Vector newView = Vector.moveBfromAonGrad(right, view, ROTATE_ANGLE);
-        Vector newRight = Vector.moveAtoBonGrad(right, view, ROTATE_ANGLE);
-        view = newView;
-        right = newRight;
+        Vector.moveAtoBonGrad(view, right, ROTATE_ANGLE);
     }
 }

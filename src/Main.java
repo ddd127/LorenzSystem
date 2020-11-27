@@ -1,4 +1,3 @@
-import geometry.Geometry;
 import geometry.Line;
 import geometry.Point;
 
