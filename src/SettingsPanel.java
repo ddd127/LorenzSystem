@@ -17,6 +17,9 @@ public class SettingsPanel extends JPanel {
         component.setBackground(new Color(30, 30, 30));
         component.setForeground(Color.WHITE);
         component.setBorder(border);
+        component.setBorder(BorderFactory.createCompoundBorder(
+                component.getBorder(),
+                BorderFactory.createEmptyBorder(8, 16, 8, 0)));
         component.setOpaque(true);
         if (component instanceof JTextField) {
             ((JTextField) component).setCaretColor(Color.WHITE);
@@ -24,12 +27,12 @@ public class SettingsPanel extends JPanel {
     }
 
     private static String formatNumber(int i) {
-        return "  " + i;
+        return Integer.toString(i);
     }
 
     private static String formatNumber(double d) {
         int digits = Math.max(1, (int) Math.log10(d) + 1);
-        String s = String.format("  %." + Math.max(0, SIGNS - digits) + "f", d);
+        String s = String.format("%." + Math.max(0, SIGNS - digits) + "f", d);
         return (s.contains(".") ? s.replaceAll("0*$", "").replaceAll("\\.$", ".0") : s);
     }
 
@@ -43,19 +46,21 @@ public class SettingsPanel extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.ipady = 15;
         c.insets = new Insets(0, 0, 0, 0);
         int row = 0;
 
 
         c.gridy = row++;
-        JLabel systemText = new JLabel("<html>&nbsp;&nbsp;x' = \u03C3(y - x)<br>" +
-                "&nbsp;&nbsp;y' = x(\u03F1 - z) - y<br>" +
-                "&nbsp;&nbsp;z' = xy - \u03D0z</html>");
+        JLabel systemText = new JLabel("<html>x' = \u03C3(y - x)<br>" +
+                "y' = x(\u03F1 - z) - y<br>" +
+                "z' = xy - \u03D0z</html>");
         setSettings(systemText);
         systemText.setBorder(new BasicBorders.FieldBorder(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
+        systemText.setBorder(BorderFactory.createCompoundBorder(
+                systemText.getBorder(),
+                BorderFactory.createEmptyBorder(8, 16, 8, 0)));
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 15, 0);
+        c.insets = new Insets(0, 0, 14, 0);
         gridBag.setConstraints(systemText, c);
         this.add(systemText);
         c.insets = new Insets(0, 0, 0, 0);
@@ -64,8 +69,8 @@ public class SettingsPanel extends JPanel {
 
 
         c.gridy = row++;
-        JLabel speedLabel = new JLabel("  Speed");
-        JTextField speedText = new JTextField(20);
+        JLabel speedLabel = new JLabel("Speed");
+        JTextField speedText = new JTextField(10);
         setSettings(speedLabel);
         setSettings(speedText);
         gridBag.setConstraints(speedLabel, c);
@@ -87,7 +92,7 @@ public class SettingsPanel extends JPanel {
             }
         });
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 20, 0);
+        c.insets = new Insets(0, 0, 14, 0);
         gridBag.setConstraints(speedButton, c);
         this.add(speedButton);
         c.insets = new Insets(0, 0, 0, 0);
@@ -97,8 +102,8 @@ public class SettingsPanel extends JPanel {
 
 
         c.gridy = row++;
-        JLabel xLabel = new JLabel("  Start x");
-        JTextField xText = new JTextField(20);
+        JLabel xLabel = new JLabel("Start x");
+        JTextField xText = new JTextField(10);
         setSettings(xLabel);
         setSettings(xText);
         gridBag.setConstraints(xLabel, c);
@@ -109,8 +114,8 @@ public class SettingsPanel extends JPanel {
         c.ipadx = 0;
 
         c.gridy = row++;
-        JLabel yLabel = new JLabel("  Start y");
-        JTextField yText = new JTextField(20);
+        JLabel yLabel = new JLabel("Start y");
+        JTextField yText = new JTextField(10);
         setSettings(yLabel);
         setSettings(yText);
         gridBag.setConstraints(yLabel, c);
@@ -119,8 +124,8 @@ public class SettingsPanel extends JPanel {
         this.add(yText);
 
         c.gridy = row++;
-        JLabel zLabel = new JLabel("  Start z");
-        JTextField zText = new JTextField(20);
+        JLabel zLabel = new JLabel("Start z");
+        JTextField zText = new JTextField(10);
         setSettings(zLabel);
         setSettings(zText);
         gridBag.setConstraints(zLabel, c);
@@ -147,7 +152,7 @@ public class SettingsPanel extends JPanel {
             }
         });
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 20, 0);
+        c.insets = new Insets(0, 0, 14, 0);
         gridBag.setConstraints(startButton, c);
         this.add(startButton);
         c.insets = new Insets(0, 0, 0, 0);
@@ -157,8 +162,8 @@ public class SettingsPanel extends JPanel {
 
 
         c.gridy = row++;
-        JLabel rhoLabel = new JLabel("  Rho \u03F1");
-        JTextField rhoText = new JTextField(20);
+        JLabel rhoLabel = new JLabel("Rho \u03F1");
+        JTextField rhoText = new JTextField(10);
         setSettings(rhoLabel);
         setSettings(rhoText);
         gridBag.setConstraints(rhoLabel, c);
@@ -167,8 +172,8 @@ public class SettingsPanel extends JPanel {
         this.add(rhoText);
 
         c.gridy = row++;
-        JLabel sigmaLabel = new JLabel("  Sigma \u03C3");
-        JTextField sigmaText = new JTextField(20);
+        JLabel sigmaLabel = new JLabel("Sigma \u03C3");
+        JTextField sigmaText = new JTextField(10);
         setSettings(sigmaLabel);
         setSettings(sigmaText);
         gridBag.setConstraints(sigmaLabel, c);
@@ -177,8 +182,8 @@ public class SettingsPanel extends JPanel {
         this.add(sigmaText);
 
         c.gridy = row++;
-        JLabel betaLabel = new JLabel("  Beta \u03D0");
-        JTextField betaText = new JTextField(20);
+        JLabel betaLabel = new JLabel("Beta \u03D0");
+        JTextField betaText = new JTextField(10);
         setSettings(betaLabel);
         setSettings(betaText);
         gridBag.setConstraints(betaLabel, c);
@@ -187,8 +192,8 @@ public class SettingsPanel extends JPanel {
         this.add(betaText);
 
         c.gridy = row++;
-        JLabel dtLabel = new JLabel("  dt");
-        JTextField dtText = new JTextField(20);
+        JLabel dtLabel = new JLabel("dt");
+        JTextField dtText = new JTextField(10);
         setSettings(dtLabel);
         setSettings(dtText);
         gridBag.setConstraints(dtLabel, c);

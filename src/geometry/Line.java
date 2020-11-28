@@ -26,13 +26,13 @@ public class Line implements Iterable<Segment> {
 
     public void add(Point point) {
         if (points.size() >= CAPACITY) {
-            points.poll();
+            points.removeLast();
         }
-        points.add(point);
+        points.addFirst(point);
     }
 
     public Point back() {
-        return points.getLast();
+        return points.getFirst();
     }
 
     public int size() {
