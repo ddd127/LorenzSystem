@@ -4,13 +4,14 @@ import geometry.Point;
 import javax.swing.*;
 
 public class Model implements Runnable {
-    double sigma;
-    double rho;
-    double beta;
-    double dt;
+    private double sigma;
+    private double rho;
+    private double beta;
+    private double dt;
+    private Point start;
+    private int pointsByIteration = 50;
 
     private JFrame view;
-
     private final Line line;
 
     public Model(Line line) {
@@ -39,36 +40,29 @@ public class Model implements Runnable {
                 z + dt * dzdt(x, y, z));
     }
 
-    public double getSigma() {
-        return sigma;
+    public void setConstants(double rho, double sigma, double beta, double dt) {
+        synchronized (line) {
+            this.rho = rho;
+            this.sigma = sigma;
+            this.beta = beta;
+            this.dt = dt;
+        }
     }
 
-    public void setSigma(double sigma) {
-        this.sigma = sigma;
+    public double getSigma() {
+        return sigma;
     }
 
     public double getRho() {
         return rho;
     }
 
-    public void setRho(double rho) {
-        this.rho = rho;
-    }
-
     public double getBeta() {
         return beta;
     }
 
-    public void setBeta(double beta) {
-        this.beta = beta;
-    }
-
     public double getDt() {
         return dt;
-    }
-
-    public void setDt(double dt) {
-        this.dt = dt;
     }
 
     public void setDefault() {
@@ -76,22 +70,23 @@ public class Model implements Runnable {
         sigma = 11.;
         beta = 8. / 3.;
         dt = 0.0008;
+        start = new Point(1., 1., 1.);
     }
 
-    private Point generate(Line line, Point point, int count) {
-        for (int i = 0; i < count; ++i) {
+    private void generate(Line line, Point point) {
+        for (int i = 0; i < pointsByIteration; ++i) {
             point = next(point);
             line.add(point);
         }
-        return point;
     }
 
     @Override
     public void run() {
         int sleep;
+        restart(start);
         while (true) {
             synchronized (line) {
-                generate(line, line.back(), 50);
+                generate(line, line.back());
                 sleep = 15 - line.size() / 5_000;
             }
             if (view != null) {
@@ -107,5 +102,27 @@ public class Model implements Runnable {
 
     public void setView(JFrame view) {
         this.view = view;
+    }
+
+    public void restart(Point start) {
+        synchronized (line) {
+            line.clear();
+            this.start = new Point(start.x, start.y, start.z);
+            line.add(start);
+        }
+    }
+
+    public Point getStart() {
+        return new Point(start.x, start.y, start.z);
+    }
+
+    public int getPointsByIteration() {
+        return pointsByIteration;
+    }
+
+    public void setPointsByIteration(int pointsByIteration) {
+        synchronized (line) {
+            this.pointsByIteration = pointsByIteration;
+        }
     }
 }

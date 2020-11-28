@@ -38,4 +38,8 @@ public class Line implements Iterable<Segment> {
     public int size() {
         return points.size();
     }
+
+    public void clear() {
+        points.clear();
+    }
 }
