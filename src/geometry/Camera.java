@@ -10,12 +10,12 @@ public class Camera {
 
     private static final int ROTATE_ANGLE = 2;
     private static final double ZOOM_MUL = 1.05;
-    private static final double MOVE_SPEED = 0.7;
+    private static final double MOVE_SPEED = 10.0;
 
-    private Point position;
-    private Vector view;
-    private Vector top;
-    private Vector right;
+    private final Point position;
+    private final Vector view;
+    private final Vector top;
+    private final Vector right;
     private double zoom;
 
     public Camera() {
@@ -58,27 +58,27 @@ public class Camera {
     }
 
     public void moveUp() {
-        position.move(top, MOVE_SPEED);
+        position.move(top, MOVE_SPEED / zoom);
     }
 
     public void moveDown() {
-        position.move(top.negate(), MOVE_SPEED);
+        position.move(top.negate(), MOVE_SPEED / zoom);
     }
 
     public void moveRight() {
-        position.move(right.negate(), MOVE_SPEED);
+        position.move(right.negate(), MOVE_SPEED / zoom);
     }
 
     public void moveLeft() {
-        position.move(right, MOVE_SPEED);
+        position.move(right, MOVE_SPEED / zoom);
     }
 
     public void zoomUp() {
-        zoom *= 1.05;
+        zoom *= ZOOM_MUL;
     }
 
     public void zoomDown() {
-        zoom *= 0.95;
+        zoom /= ZOOM_MUL;
     }
 
     public void camUp() {

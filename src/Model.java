@@ -9,12 +9,11 @@ public class Model implements Runnable {
     double beta;
     double dt;
 
-    private final JFrame view;
+    private JFrame view;
 
     private final Line line;
 
-    public Model(Line line, JFrame view) {
-        this.view = view;
+    public Model(Line line) {
         this.line = line;
         setDefault();
     }
@@ -95,12 +94,18 @@ public class Model implements Runnable {
                 generate(line, line.back(), 50);
                 sleep = 15 - line.size() / 5_000;
             }
-            view.repaint();
+            if (view != null) {
+                view.repaint();
+            }
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setView(JFrame view) {
+        this.view = view;
     }
 }
