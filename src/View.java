@@ -12,8 +12,10 @@ public class View extends JPanel {
 
     private final Line points;
     private final Camera camera;
+    private final int leftMargin;
 
-    public View(Line points) {
+    public View(Line points, int leftMargin) {
+        this.leftMargin = leftMargin;
         this.points = points;
         this.camera = new Camera();
         this.setFocusable(true);
@@ -101,8 +103,8 @@ public class View extends JPanel {
             return;
         }
         synchronized (points) {
-            this.setPreferredSize(new Dimension(this.getParent().getWidth() - 300, this.getParent().getHeight()));
-            this.setSize(new Dimension(this.getParent().getWidth() - 300, this.getParent().getHeight()));
+            this.setPreferredSize(new Dimension(this.getParent().getWidth() - leftMargin, this.getParent().getHeight()));
+            this.setSize(new Dimension(this.getParent().getWidth() - leftMargin, this.getParent().getHeight()));
             graphics.setColor(Color.black);
             graphics.fillRect(0, 0, this.getWidth(), this.getHeight());
             paintLine((Graphics2D) graphics);

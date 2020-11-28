@@ -8,7 +8,7 @@ import java.awt.*;
 public class SettingsPanel extends JPanel {
 
     private final Color backgroundColor = new Color(50, 50, 50);
-    private final Font font = new Font("Times New Roman", Font.PLAIN, 24);
+    private final Font font = new Font("Times New Roman", Font.PLAIN, 22);
     private final Border border = new BasicBorders.FieldBorder(backgroundColor, backgroundColor, Color.BLACK, Color.BLACK);
     private static final int SIGNS = 9;
 
@@ -23,15 +23,19 @@ public class SettingsPanel extends JPanel {
         }
     }
 
-    private static String formatDouble(double d) {
+    private static String formatNumber(int i) {
+        return "  " + i;
+    }
+
+    private static String formatNumber(double d) {
         int digits = Math.max(1, (int) Math.log10(d) + 1);
-        String s = String.format("%." + Math.max(0, SIGNS - digits) + "f", d);
+        String s = String.format("  %." + Math.max(0, SIGNS - digits) + "f", d);
         return (s.contains(".") ? s.replaceAll("0*$", "").replaceAll("\\.$", ".0") : s);
     }
 
     public SettingsPanel(Model model) {
 
-        this.setPreferredSize(new Dimension(300, 800));
+        this.setPreferredSize(new Dimension(300, 0));
         this.setBackground(backgroundColor);
 
         GridBagLayout gridBag = new GridBagLayout();
@@ -39,7 +43,7 @@ public class SettingsPanel extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.ipady = 20;
+        c.ipady = 15;
         c.insets = new Insets(0, 0, 0, 0);
         int row = 0;
 
@@ -51,7 +55,7 @@ public class SettingsPanel extends JPanel {
         setSettings(systemText);
         systemText.setBorder(new BasicBorders.FieldBorder(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 20, 0);
+        c.insets = new Insets(0, 0, 15, 0);
         gridBag.setConstraints(systemText, c);
         this.add(systemText);
         c.insets = new Insets(0, 0, 0, 0);
@@ -79,7 +83,7 @@ public class SettingsPanel extends JPanel {
             } catch (NumberFormatException ignored) {
 
             } finally {
-                speedText.setText(Integer.toString(model.getPointsByIteration()));
+                speedText.setText(formatNumber(model.getPointsByIteration()));
             }
         });
         c.gridwidth = 2;
@@ -137,9 +141,9 @@ public class SettingsPanel extends JPanel {
 
             } finally {
                 Point p = model.getStart();
-                xText.setText(formatDouble(p.x));
-                yText.setText(formatDouble(p.y));
-                zText.setText(formatDouble(p.z));
+                xText.setText(formatNumber(p.x));
+                yText.setText(formatNumber(p.y));
+                zText.setText(formatNumber(p.z));
             }
         });
         c.gridwidth = 2;
@@ -205,10 +209,10 @@ public class SettingsPanel extends JPanel {
                 } catch (NumberFormatException ignored) {
 
                 } finally {
-                    rhoText.setText(formatDouble(model.getRho()));
-                    sigmaText.setText(formatDouble(model.getSigma()));
-                    betaText.setText(formatDouble(model.getBeta()));
-                    dtText.setText(formatDouble(model.getDt()));
+                    rhoText.setText(formatNumber(model.getRho()));
+                    sigmaText.setText(formatNumber(model.getSigma()));
+                    betaText.setText(formatNumber(model.getBeta()));
+                    dtText.setText(formatNumber(model.getDt()));
                 }
         });
         c.gridwidth = 2;
@@ -218,11 +222,5 @@ public class SettingsPanel extends JPanel {
         changesButton.doClick();
 
         this.setOpaque(true);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        this.setPreferredSize(new Dimension(this.getWidth(), this.getParent().getHeight()));
-        super.paintComponent(g);
     }
 }
