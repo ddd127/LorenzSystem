@@ -15,27 +15,10 @@
 
 \usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
 
+\usepackage{graphicx}
+
 
 \usepackage{wasysym}
-
-\newtheorem*{Lemma}{Лемма}
-\theoremstyle{definition}
-\newtheorem*{Remark}{Замечание}
-\newtheorem*{Remark1}{Замечание 1}
-\newtheorem*{Remark2}{Замечание 2}
-\newtheorem*{Sign}{Обозначение}
-\newtheorem*{Claim}{Утверждение}
-\newtheorem*{Feat}{Свойства}
-\newtheorem*{Cor}{Следствие}
-\newtheorem*{Theorem}{Теорема}
-\theoremstyle{definition}
-\newtheorem*{Examples}{Примеры}
-\newtheorem*{Example}{Пример}
-\newtheorem*{known}{Теорема}
-\newtheorem*{Proof}{Доказательство}
-\newtheorem*{SpecCase}{Частный случай}
-\theoremstyle{definition}
-\newtheorem*{Def}{Определение}
 
 \usepackage{geometry} 
 \geometry{a4paper,top=2cm,bottom=3cm,left=2cm}
@@ -54,7 +37,12 @@
 
 Трубка, замкнутая в кольцо, наполнена почти несжимаемой жидкостью. Она подогревается снизу и охлаждается сверху, и при достаточно сильном нагреве возможно возникновение конвекционного течения.
 
--- рисуночек --
+\begin{figure}[h]
+	\centering
+ 	\includegraphics[scale=0.5]{Lorenz.png}
+ 	\caption{Кольцо с подогревом.}
+  	\label{fig:boat1}
+\end{figure}
 
 Заметим, что раз жидкость почти несжимаемая, то ее скорость во всех точках трубки постоянна, она не зависит от $\phi$. Обозначим скорость за $X$.
 

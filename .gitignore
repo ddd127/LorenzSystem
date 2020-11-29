@@ -1,3 +1,6 @@
 .idea
 LorenzSystem.iml
 out
+LorenzSystem.aux
+LorenzSystem.log
+LorenzSystem.synctex.gz
