@@ -8,7 +8,7 @@ import java.awt.*;
 public class SettingsPanel extends JPanel {
 
     private final Color backgroundColor = new Color(50, 50, 50);
-    private final Font font = new Font("Times New Roman", Font.PLAIN, 22);
+    private final Font font = new Font("Times New Roman", Font.PLAIN, 20);
     private final Border border = new BasicBorders.FieldBorder(backgroundColor, backgroundColor, Color.BLACK, Color.BLACK);
     private static final int SIGNS = 9;
 
@@ -19,7 +19,7 @@ public class SettingsPanel extends JPanel {
         component.setBorder(border);
         component.setBorder(BorderFactory.createCompoundBorder(
                 component.getBorder(),
-                BorderFactory.createEmptyBorder(8, 16, 8, 0)));
+                BorderFactory.createEmptyBorder(5, 16, 5, 0)));
         component.setOpaque(true);
         if (component instanceof JTextField) {
             ((JTextField) component).setCaretColor(Color.WHITE);
@@ -48,6 +48,25 @@ public class SettingsPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0, 0, 0, 0);
         int row = 0;
+
+
+
+        c.gridy = row++;
+        JLabel controlText = new JLabel("<html>WASD - rotate<br>" +
+                "Arrows - move<br>" +
+                "+- - zoom</html>");
+        setSettings(controlText);
+        controlText.setBorder(new BasicBorders.FieldBorder(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
+        controlText.setBorder(BorderFactory.createCompoundBorder(
+                controlText.getBorder(),
+                BorderFactory.createEmptyBorder(8, 16, 8, 0)));
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 14, 0);
+        gridBag.setConstraints(controlText, c);
+        this.add(controlText);
+        c.insets = new Insets(0, 0, 0, 0);
+        c.gridwidth = 1;
+
 
 
         c.gridy = row++;
