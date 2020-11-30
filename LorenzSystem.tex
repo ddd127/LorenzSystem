@@ -30,7 +30,6 @@
 \newpage
 
 \section{Система Лоренца}
-
 Об объекте можно говорить, как о динамической системе, если можно указать такой набор величин, называемых динамическими переменными и характеризующих состояние системы, что их значения в любой последующий момент времени получаются из исходного набора по определенному правилу.
 
 Хоть и по определению динамической системы всегда можно однозначно предсказать конечное состояние по исходному, но в ней все равно может возникать хаос. В хаотическом режиме любая неточность в задании начального состояния нарастает во времени, так что предсказуемость становится недостижимой на достаточно больших интервалах времени. Такого рода режимы характеризуются нерегулярным, хаотическим изменением динамических переменных во времени.
@@ -50,64 +49,161 @@ $$\begin{cases}
 
 Трубка, замкнутая в кольцо, наполнена почти несжимаемой жидкостью. Она подогревается снизу и охлаждается сверху, и при достаточно сильном нагреве возможно возникновение конвекционного течения.
 
-\begin{figure}[h]
-	\centering
- 	\includegraphics[scale=0.5]{Lorenz.png}
- 	\caption{Кольцо с подогревом.}
-  	\label{fig:boat1}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+% 	\includegraphics[scale=0.5]{Lorenz.png}
+% 	\caption{Кольцо с подогревом.}
+%\end{figure}
 
-Заметим, что раз жидкость почти несжимаемая, то ее скорость во всех точках трубки постоянна, она не зависит от $\phi$. Обозначим скорость за $X$.
+Пусть $a$ -- радиус петли, внутренний радиус много меньше $a$.
+
+Заметим, что раз жидкость почти несжимаемая, то ее скорость во всех точках трубки постоянна, она не зависит от $\phi$. Обозначим скорость за $q = q(t)$.
 
 Температура жидкости в трубке будет зависить от угла $\phi$, который отсчитывается от направленного вниз радиуса до точки против часовой стрелки. $T = T(\phi) -$ периодическая функция (период равен $2\pi$) $\Rightarrow$ ее можно разложить в ряд Фурье.
 
-При разложении основную амплитуду задают первые слагаемые, поэтому рассмотрим только первую гармонику. Уравнение будет иметь вид $T = T_0 \cdot (1+Ysin\phi + Zcos\phi)$. Исследуем коэффициенты при $sin\phi$ и $cos\phi$.
+При разложении основную амплитуду задают первые слагаемые, поэтому рассмотрим только первую гармонику. Уравнение будет иметь вид 
+\begin{equation}\label{eq1}
+T - T_0 = T_2\cos\phi + T_1\sin\phi
+\end{equation}
+Исследуем коэффициенты при $\sin\phi$ и $\cos\phi$.
 
-Отклонение температуры от радиуса, направленного к нагревателю зависит от $cos \phi$, значит $Z$ характеризует отклонение температуры от среднего значения в точке нагрева (нижней точки трубки). Отклонение от крайней правой точки (на 3 часа, то есть $\phi = \frac{\pi}{2}$) зависит от $sin\phi$, и $Y$ его характеризует.
+Рассмотрим $\phi = 0$ и $\phi = 2 \pi$, тогда $\cos\phi = 1, \sin\phi = 0$. Значит, $2T_2$ показывает разницу температур между нижней точкой (точка нагрева) и верхней точкой (точка охлаждения). Аналогично исследуем при $\phi = \frac{\pi}{2}$ и $\phi = \frac{3 \pi}{2}$. Получается, что $2T_3$ отвечает за разницу между боковыми точками петли. $T_2$ и $T_3$ зависят от времени.
 
-Рассмотрим, что вызывает изменение скорости жидкости. Во-первых, действует сила Архимеда, она пропорциональна $Y$, так как в $\phi=\frac{\pi}{2}$ она направлена вверх. Во-вторых, действует сила вязкости, которая пропорциональна скорости, следовательно, пропорциональна $X$. Тогда
+Уравнение Навье-Стокса в общем виде:
 
-\begin{equation}
-	\dot{X} = cY-\beta X
+\begin{equation*}
+\frac{\partial \overrightarrow{u}}{\partial t} + \overrightarrow{u} \cdot \overrightarrow{\nabla} \overrightarrow{u} = -\frac{1}{\rho} \overrightarrow{\nabla} p - \overrightarrow{g} \alpha \Delta T + v \nabla^2 \overrightarrow{u}
+\end{equation*}
+
+В наших обозначениях:
+\begin{itemize}
+\item $\overrightarrow{u} \rightarrow q$
+\item так как $q=q(t)$, то можно заменить $\frac{\partial q}{\partial t}$ на $\frac{dq}{dt}$
+\item жидкость несжимаемая, следовательно $\overrightarrow{u} \cdot \overrightarrow{\nabla} \overrightarrow{u} \rightarrow 0$
+\item при переходе в полярные координаты $\overrightarrow{\nabla} p \rightarrow \frac{1}{a} \frac{\partial p}{\partial \phi}$
+\item действует сила Архимеда, она зависит от $\sin\phi$, следовательно $-\overrightarrow{g} \alpha \Delta T = g \alpha (T-T_0) \sin\phi$
+\item коэффициент кинематической вязкости $\Gamma$ зависит от скорости, поэтому $v \nabla^2 \overrightarrow{u} \rightarrow -\Gamma q$
+\end{itemize}
+
+В итоге, уравнение Навье-Стокса для нашей системы примет вид:
+
+\begin{equation}\label{eq2}
+\frac{\partial q}{\partial t} = -\frac{1}{\rho a}\frac{\partial p}{\partial \phi} + g \alpha (T-T_0) \sin\phi -\Gamma q
 \end{equation}
 
-Пусть течение происходит с постоянной скоростью, то есть угол изменяется на $Xt$. Тогда
+Подставим уравнение (\ref{eq1}) в (2):
 
-\begin{equation}
-	T=f(\phi-Xt)=T_0(1+Ysin(\phi-Xt)+Zcos(\phi-Xt))
+\begin{equation*}
+\frac{\partial q}{\partial t} = -\frac{1}{\rho a}\frac{\partial p}{\partial \phi} + g \alpha (T_2\cos\phi + T_1\sin\phi) \sin\phi -\Gamma q
+\end{equation*}
+
+Избавимся от части с давлением, проинтегрировав один раз от 0 до $2\pi$. Тогда 
+
+\begin{equation*}
+-\frac{1}{\rho a} \int_{0}^{2\pi} \frac{\partial p}{\partial \phi}\, d\phi = 0
+\end{equation*}
+
+\begin{equation*}
+g \alpha T_2 \int_{0}^{2\pi} \cos\phi \sin\phi\, d\phi = \frac{1}{2} \sin^2 \phi \Big|_0^{2\pi} = 0
+\end{equation*}
+
+\begin{equation*}
+g \alpha T_3 \int_{0}^{2\pi} \sin^2 \phi\, d\phi = g \alpha T_3 \pi
+\end{equation*}
+
+\begin{equation*}
+\int_{0}^{2\pi} \frac{\partial q}{\partial t}\, d\phi = 2\pi
+\end{equation*}
+
+\begin{equation*}
+\int_{0}^{2\pi} -\Gamma q\, d\phi = -2\pi\Gamma q
+\end{equation*}
+
+Тогда, поделив обе части уравнения на $2\pi$, получим:
+
+\begin{equation}\label{eq23}
+\frac{dq}{dt} = -\Gamma q + \frac{g \alpha T_3}{2}
 \end{equation}
 
-Пусть $\phi'=\phi-Xt$, тогда
+Таким образом, можно заметить, что скорость изменяется из-за разницы температур в боковых точках, то есть зависит от $2T_3$.
 
-\begin{equation}
-	\dot{T}=T_0(Y(-X)cos\phi'-Z(-X)sin\phi')=T_0(ZXsin\phi'-YXcos\phi')
+Теперь рассмотрим уравнение распространения теплоты в жидкости:
+
+\begin{equation*}
+\frac{\partial T}{\partial t} + \overrightarrow{u} \overrightarrow{\nabla} T = \kappa \nabla^2 T 
+\end{equation*}
+где $\kappa$ -- коэффициент температуропроводности.
+
+В условиях задачи:
+
+\begin{equation}\label{eq3}
+\frac{\partial T}{\partial t} + \frac{q}{a} \frac{\partial T}{\partial \phi} = K(T_{external}-T_{internal}) = K(T_E-T)
 \end{equation}
 
-Вспомним, что за отклонение температуры от нижней точки отвечал $cos\phi \Longrightarrow$ перенос температуры потоком жидкости для $Z$ учитывается членом $-YX$. Аналогично, для $Y$ будет $ZX$.
+Внешняя температура зависит от высоты: 
+\begin{equation}\label{eq4}
+T_E = T_0+T_1\cos\phi
+\end{equation}
+Внутренняя же температура зависит от $T_2$ и $T_3$ (уравнение (\ref{eq1})). Вычтем из (\ref{eq1}) (4) и подставим в (3):
 
-В точке $Z$ происходит постоянный подогрев, поэтому в уравнении будем его учитывать, добавив константу $A$. 
+\begin{equation*}
+\frac{dT_2}{dt}\cos\phi + \frac{dT_3}{dt}\sin\phi - \frac{q}{a}T_2\sin\phi + \frac{q}{a}T_3\cos\phi = K(T_1-T_2)\cos\phi-KT_3\sin\phi
+\end{equation*}
 
-В системе стремится установиться термодинамическое равновесие, следовательно, надо учитывать в уравнениях для $Y$ и $Z$ релаксацию, это будут члены $-DY$ и $-DZ$ соотвественно, где $D -$ постоянная величина.
+Коэффициенты при $\sin\phi$ и $\cos\phi$ должны совпадать в обеих частях, следовательно 
 
-Таким образом
+\begin{equation*}
+\frac{dT_3}{dt} - \frac{qT_2}{a} = -KT_3
+\end{equation*}
 
-$$\begin{cases}
-	\dot{X} = cY-\beta X \\
-	\dot{Y} = XZ-DY \\
-	\dot{Z} = A-XY-DZ
-\end{cases}$$
+\begin{equation*}
+\frac{dT_2}{dt} + \frac{qT_3}{a} = K(T_1-T_2) = KT_4
+\end{equation*}
+где $T_4$ показывает разницу внешней и внутренней температуры внизу и вверху трубки.
 
-Заменим переменные: $X=Dx, Y=\frac{\beta Dy}{c}, Z=-\frac{\beta Dz}{c}$, тогда
+\begin{equation}\label{eq5}
+\frac{qT_2}{a} = \frac{qT_1}{a} - \frac{qT_4}{a} \Longrightarrow \frac{dT_3}{dt} = -KT_3 + \frac{qT_1}{a} - \frac{qT_4}{a}
+\end{equation}
 
+$T_1$ определяется конфигурацией системы и не зависит от времени, следовательно, $\frac{dT_2}{dt} = -\frac{dT_4}{dt} \Longrightarrow$
+
+\begin{equation}\label{eq6}
+\frac{dT_4}{dt} = -KT_4 + \frac{qT_3}{a}
+\end{equation}
+
+Уравнения (3), (6) и (7) образуют систему дифференциальных уравнений, которую можно привести к виду системы Лоренца. Для этого сделаем следующие замены:
+\begin{equation*}
+q = aKx, \quad T_3 = \frac{2a \Gamma Ky}{g \alpha}, \quad T_4 = \frac{2a \Gamma Kz}{g \alpha}, \quad t \rightarrow Kt
+\end{equation*}
+
+Тогда
+
+\begin{equation*}
+aK^2\dot{x} = -\Gamma aKx + a\Gamma Ky \Longrightarrow \dot{x} = \frac{\Gamma}{K} (y - x)
+\end{equation*}
+
+\begin{equation*}
+\frac{2a\Gamma K^2}{g\alpha} \dot{y} = -\frac{2a\Gamma K^2}{g\alpha}y + \frac{aKxT_1}{a} - \frac{aKx \cdot 2a \Gamma Kz}{ag\alpha} \Longrightarrow \dot{y} = -y + \frac{g\alpha T_1}{2a\Gamma K}x - xz
+\end{equation*}
+
+\begin{equation*}
+\frac{2a\Gamma K^2}{g\alpha} \dot{z} = -\frac{K \cdot 2a\Gamma K}{g\alpha} + \frac{aKx \cdot 2a\Gamma Ky}{a} \Longrightarrow \dot{z} = -z+xy
+\end{equation*}
+
+
+Таким образом, была получена система дифференциальных уравнений Лоренца.
 $$\begin{cases}	
 	\dot{x} = \sigma (y-x) \\
 	\dot{y} = x(\rho-z)-y \\
 	\dot{z} = xy-bz
 \end{cases}$$
+где 
+\[ \rho = \frac{g\alpha T_1}{2a\Gamma K} - \text{число Рэлея}\]
+\[P = \frac{\Gamma}{K} - \text{число Прандтля}\] 
 
-где $\sigma = \frac{\beta}{D}, \rho=\frac{cA}{\beta D^2}, b=1$.
+Число Релея определяет поведение жидкости под воздействием градиента температуры. Число Прандтля -- один из критериев подобия тепловых процессов в жидкостях, который учитывает флияние физических свойств теплоносителя на теплоотдачу.
 
-Таким образом, были получены уравнения Лоренца.
+В условиях данной задачи $x$ показывает скорость течения, $y$ -- отклонение температуры от средней в точке $\phi = \frac{\pi}{2}$, $z$ -- то же, но в нижней точке.
 
 \section{Другие области применения}
 
