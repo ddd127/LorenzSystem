@@ -78,7 +78,7 @@ T - T_0 = T_2\cos\phi + T_1\sin\phi
 Уравнение Навье-Стокса в общем виде:
 
 \begin{equation*}
-\frac{\partial \overrightarrow{u}}{\partial t} + \overrightarrow{u} \cdot \overrightarrow{\nabla} \overrightarrow{u} = -\frac{1}{\rho} \overrightarrow{\nabla} p + \overrightarrow{f} + \nu (\Delta \overrightarrow{u})
+\frac{\partial \overrightarrow{u}}{\partial t} + \overrightarrow{u} \cdot \overrightarrow{\nabla} \overrightarrow{u} = -\frac{1}{\rho} \overrightarrow{\nabla} p - \overrightarrow{g} \alpha \Delta T + v \nabla^2 \overrightarrow{u}
 \end{equation*}
 
 В наших обозначениях:
@@ -87,16 +87,13 @@ T - T_0 = T_2\cos\phi + T_1\sin\phi
 \item так как $q=q(t)$, то можно заменить $\frac{\partial q}{\partial t}$ на $\frac{dq}{dt}$
 \item жидкость несжимаемая, следовательно $\overrightarrow{u} \cdot \overrightarrow{\nabla} \overrightarrow{u} \rightarrow 0$
 \item при переходе в полярные координаты $\overrightarrow{\nabla} p \rightarrow \frac{1}{a} \frac{\partial p}{\partial \phi}$
-\item коэффициент кинематической вязкости $\Gamma$ пропорционален скорости, поэтому $\nu (\Delta \overrightarrow{u}) \rightarrow -\Gamma q$
+\item коэффициент кинематической вязкости $\Gamma$ зависит от скорости, поэтому $v \nabla^2 \overrightarrow{u} \rightarrow -\Gamma q$
 \end{itemize}
 
 
-В уравнении $\overrightarrow{f}$ -- векторное поле массовых сил. В нашем случае в каждой точке кольца действует сила Архимеда, она состоит из нормальной и тангенциальной составляющей. Нормальная составляющая компенсируется стенками, поэтому рассмотрим тангенциальную (понятно, что численно $F_{\tau} = F\sin\phi$). Рассмотрим на глубине $h$ слой толщиной $dh$. Давление, оказываемое в этой точке, будет $\rho g \Delta h$. Домножив на площадь поперечного сечения, получим силу Архимеда: $\rho g \Delta hS = \rho g \Delta V = \Delta m g$. $\alpha$ -- коэффициент температурного расширения, $m=m_0+\alpha\Delta T$.
+В каждой точке кольца действует сила Архимеда, она состоит из нормальной и тангенциальной составляющей. Нормальная составляющая компенсируется стенками, поэтому рассмотрим тангенциальную (понятно, что численно $F_{\theta} = F\sin\phi$). Рассмотрим на глубине $h$ слой толщиной $dh$. Объем, а значит и плотность, зависят от температуры, то есть зависят от глубины 
 
-\begin{equation*}
-\int_{m_0}^{m_0+\alpha\Delta T} d, dm = gm \Big|_{m_0}^{m_0+\alpha\Delta T} = g\alpha\Delta T
-\end{equation*}
-Таким образом, $\overrightarrow{f} \rightarrow g \alpha (T-T_0) \sin\phi$
+$-\overrightarrow{g} \alpha \Delta T = g \alpha (T-T_0) \sin\phi$
 
 В итоге, уравнение Навье-Стокса для нашей системы примет вид:
 
