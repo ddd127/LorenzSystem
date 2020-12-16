@@ -8,7 +8,7 @@ import java.awt.*;
 public class SettingsPanel extends JPanel {
 
     private final Color backgroundColor = new Color(50, 50, 50);
-    private final Font font = new Font("Times New Roman", Font.PLAIN, 20);
+    private final Font font = new Font("Times New Roman", Font.PLAIN, 18);
     private final Border border = new BasicBorders.FieldBorder(backgroundColor, backgroundColor, Color.BLACK, Color.BLACK);
     private static final int SIGNS = 9;
 
@@ -180,6 +180,31 @@ public class SettingsPanel extends JPanel {
 
 
 
+        c.gridwidth = 2;
+
+        c.gridy = row++;
+        JCheckBox checkBoxEuler = new JCheckBox("Euler");
+        checkBoxEuler.setSelected(true);
+        setSettings(checkBoxEuler);
+        gridBag.setConstraints(checkBoxEuler, c);
+        this.add(checkBoxEuler);
+
+        c.gridy = row++;
+        JCheckBox checkBoxRunge = new JCheckBox("Runge–Kutta");
+        setSettings(checkBoxRunge);
+        gridBag.setConstraints(checkBoxRunge, c);
+        this.add(checkBoxRunge);
+
+        c.gridy = row++;
+        JCheckBox checkBoxAdams = new JCheckBox("Adams");
+        setSettings(checkBoxAdams);
+        gridBag.setConstraints(checkBoxAdams, c);
+        this.add(checkBoxAdams);
+
+        c.gridwidth = 1;
+
+
+
         c.gridy = row++;
         JLabel rhoLabel = new JLabel("Rho \u03F1");
         JTextField rhoText = new JTextField(10);
@@ -221,7 +246,7 @@ public class SettingsPanel extends JPanel {
         this.add(dtText);
 
         c.gridy = row++;
-        JButton changesButton = new JButton("Apply values");
+        JButton changesButton = new JButton("Apply");
         setSettings(changesButton);
         changesButton.addActionListener(actionEvent -> {
                 try {

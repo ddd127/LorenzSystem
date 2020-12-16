@@ -8,8 +8,8 @@ public class MainWindow extends JFrame {
     MainWindow(Line line, Model model) {
         Color background = new Color(50, 50, 50);
 
-        this.setSize(1100, 700);
-        this.setMinimumSize(new Dimension(900, 700));
+        this.setSize(1100, 850);
+        this.setMinimumSize(new Dimension(900, 850));
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(background);
