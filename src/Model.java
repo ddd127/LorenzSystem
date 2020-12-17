@@ -11,7 +11,7 @@ public class Model implements Runnable {
     private double beta;
     private double dt;
     private Point start;
-    private int pointsByIteration = 50;
+    private int pointsByIteration;
 
     private View view;
     private final Map<EvaluateType, Line> lines;
@@ -73,8 +73,9 @@ public class Model implements Runnable {
         rho = 28.;
         sigma = 11.;
         beta = 8. / 3.;
-        dt = 0.0008;
+        dt = 0.002;
         start = new Point(1., 1., 1.);
+        pointsByIteration = 10;
         lock.unlock();
     }
 
