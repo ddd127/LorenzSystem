@@ -8,7 +8,7 @@ import java.awt.*;
 public class SettingsPanel extends JPanel {
 
     private final Color backgroundColor = new Color(50, 50, 50);
-    private final Font font = new Font("Times New Roman", Font.PLAIN, 20);
+    private final Font font = new Font("Times New Roman", Font.PLAIN, 18);
     private final Border border = new BasicBorders.FieldBorder(backgroundColor, backgroundColor, Color.BLACK, Color.BLACK);
     private static final int SIGNS = 9;
 
@@ -19,7 +19,7 @@ public class SettingsPanel extends JPanel {
         component.setBorder(border);
         component.setBorder(BorderFactory.createCompoundBorder(
                 component.getBorder(),
-                BorderFactory.createEmptyBorder(5, 16, 5, 0)));
+                BorderFactory.createEmptyBorder(3, 16, 3, 0)));
         component.setOpaque(true);
         if (component instanceof JTextField) {
             ((JTextField) component).setCaretColor(Color.WHITE);
@@ -61,7 +61,7 @@ public class SettingsPanel extends JPanel {
                 controlText.getBorder(),
                 BorderFactory.createEmptyBorder(8, 16, 8, 0)));
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(controlText, c);
         this.add(controlText);
         c.insets = new Insets(0, 0, 0, 0);
@@ -79,7 +79,7 @@ public class SettingsPanel extends JPanel {
                 systemText.getBorder(),
                 BorderFactory.createEmptyBorder(8, 16, 8, 0)));
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(systemText, c);
         this.add(systemText);
         c.insets = new Insets(0, 0, 0, 0);
@@ -111,7 +111,7 @@ public class SettingsPanel extends JPanel {
             }
         });
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(speedButton, c);
         this.add(speedButton);
         c.insets = new Insets(0, 0, 0, 0);
@@ -171,12 +171,37 @@ public class SettingsPanel extends JPanel {
             }
         });
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(startButton, c);
         this.add(startButton);
         c.insets = new Insets(0, 0, 0, 0);
         c.gridwidth = 1;
         startButton.doClick();
+
+
+
+        c.gridwidth = 2;
+
+        c.gridy = row++;
+        JCheckBox checkBoxEuler = new JCheckBox("Euler");
+        checkBoxEuler.setSelected(true);
+        setSettings(checkBoxEuler);
+        gridBag.setConstraints(checkBoxEuler, c);
+        this.add(checkBoxEuler);
+
+        c.gridy = row++;
+        JCheckBox checkBoxRunge = new JCheckBox("Runge–Kutta");
+        setSettings(checkBoxRunge);
+        gridBag.setConstraints(checkBoxRunge, c);
+        this.add(checkBoxRunge);
+
+        c.gridy = row++;
+        JCheckBox checkBoxAdams = new JCheckBox("Adams");
+        setSettings(checkBoxAdams);
+        gridBag.setConstraints(checkBoxAdams, c);
+        this.add(checkBoxAdams);
+
+        c.gridwidth = 1;
 
 
 
@@ -221,10 +246,13 @@ public class SettingsPanel extends JPanel {
         this.add(dtText);
 
         c.gridy = row++;
-        JButton changesButton = new JButton("Apply values");
+        JButton changesButton = new JButton("Apply");
         setSettings(changesButton);
         changesButton.addActionListener(actionEvent -> {
                 try {
+                    model.setVisible(EvaluateType.EULER, checkBoxEuler.isSelected());
+                    model.setVisible(EvaluateType.RUNGE, checkBoxRunge.isSelected());
+                    model.setVisible(EvaluateType.ADAMS, checkBoxAdams.isSelected());
                     double rho = Double.parseDouble(rhoText.getText());
                     double sigma = Double.parseDouble(sigmaText.getText());
                     double beta = Double.parseDouble(betaText.getText());
@@ -233,6 +261,9 @@ public class SettingsPanel extends JPanel {
                 } catch (NumberFormatException ignored) {
 
                 } finally {
+                    checkBoxEuler.setSelected(model.getVisible(EvaluateType.EULER));
+                    checkBoxRunge.setSelected(model.getVisible(EvaluateType.RUNGE));
+                    checkBoxAdams.setSelected(model.getVisible(EvaluateType.ADAMS));
                     rhoText.setText(formatNumber(model.getRho()));
                     sigmaText.setText(formatNumber(model.getSigma()));
                     betaText.setText(formatNumber(model.getBeta()));

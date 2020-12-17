@@ -29,8 +29,7 @@ public class Camera {
     public void drawLine(Graphics2D g, Line line, int shiftX, int shiftY) {
         line = Geometry.lineToNewCoordinateSystem(line, position, right, top, view);
 
-        Color color = new Color(0, 0, 255);
-        g.setColor(color);
+        Color color = g.getColor();
 
         int firstChange = Line.CAPACITY / 5;
         int secondChange = Line.CAPACITY * 4 / 5;
@@ -38,14 +37,9 @@ public class Camera {
         int iteration = 0;
 
         for (Segment seg : line) {
-            if (iteration % frequency == 0) {
-                if (iteration < firstChange) {
-                    color = new Color(Math.min(color.getRed() + 1, 128), 0, Math.max(127, color.getBlue() - 1));
-                    g.setColor(color);
-                } else if (iteration > secondChange) {
-                    color = new Color(Math.max(color.getRed() - 1, 0), 0, Math.max(0, color.getBlue() - 1));
-                    g.setColor(color);
-                }
+            if (iteration % frequency == 0 && iteration > secondChange) {
+                color = new Color(Math.max(color.getRed() - 1, 0), 0, Math.max(0, color.getBlue() - 1));
+                g.setColor(color);
             }
             Point a = seg.a;
             Point b = seg.b;
