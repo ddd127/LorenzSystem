@@ -1,17 +1,16 @@
 import geometry.Line;
 
 import javax.swing.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Main extends JFrame {
 
     public static void main(String[] args) {
-        Line line = new Line();
+        ReentrantLock lock = new ReentrantLock();
 
-        Model model = new Model(line);
+        Model model = new Model(lock);
 
-        JFrame window = new MainWindow(line, model);
-
-        model.setView(window);
+        new MainWindow(lock, model);
 
         new Thread(model).start();
     }

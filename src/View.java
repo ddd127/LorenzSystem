@@ -7,18 +7,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class View extends JPanel {
 
-    private final Line points;
+    private Map<EvaluateType, Line> map;
+    private final ReentrantLock lock;
     private final Camera camera;
     private final int leftMargin;
+    private final Map<EvaluateType, Color> colorMap;
 
-    public View(Line points, int leftMargin) {
+    public View(ReentrantLock lock, int leftMargin) {
         this.leftMargin = leftMargin;
-        this.points = points;
+        this.lock = lock;
         this.camera = new Camera();
         this.setFocusable(true);
+        this.colorMap = Map.of(
+                EvaluateType.EULER, Color.BLUE,
+                EvaluateType.RUNGE, Color.RED,
+                EvaluateType.ADAMS, Color.MAGENTA
+        );
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
@@ -91,83 +101,89 @@ public class View extends JPanel {
         this.setVisible(true);
     }
 
-    private void paintLine(Graphics2D g) {
-        Color color = new Color(127, 0, 127);
+    private void paintLine(Graphics2D g, Line line, Color color) {
         g.setColor(color);
-        camera.drawLine(g, points, getWidth() / 2, getHeight() / 2);
+        camera.drawLine(g, line, getWidth() / 2, getHeight() / 2);
     }
 
     @Override
     public void paintComponent(Graphics graphics) {
-        if (points == null) {
+        if (map == null) {
             return;
         }
-        synchronized (points) {
-            this.setPreferredSize(new Dimension(this.getParent().getWidth() - leftMargin, this.getParent().getHeight()));
-            this.setSize(new Dimension(this.getParent().getWidth() - leftMargin, this.getParent().getHeight()));
-            graphics.setColor(Color.black);
-            graphics.fillRect(0, 0, this.getWidth(), this.getHeight());
-            paintLine((Graphics2D) graphics);
-        }
+        lock.lock();
+        this.setPreferredSize(new Dimension(this.getParent().getWidth() - leftMargin, this.getParent().getHeight()));
+        this.setSize(new Dimension(this.getParent().getWidth() - leftMargin, this.getParent().getHeight()));
+        graphics.setColor(Color.black);
+        graphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+        map.forEach((type, line) -> { if (map.containsKey(type)) paintLine((Graphics2D) graphics, line, colorMap.get(type)); });
+        lock.unlock();
+    }
+
+    public void repaint(Map<EvaluateType, Line> map) {
+        lock.lock();
+        this.map = map;
+        lock.unlock();
+        this.repaint();
     }
 
     public void moveUp() {
-        synchronized (points) {
-            camera.moveUp();
-        }
+        lock.lock();
+        camera.moveUp();
+        lock.unlock();
     }
 
     public void moveDown() {
-        synchronized (points) {
-            camera.moveDown();
-        }
+        lock.lock();
+        camera.moveDown();
+        lock.unlock();
     }
 
     public void moveRight() {
-        synchronized (points) {
-            camera.moveRight();
-        }
+        lock.lock();
+        camera.moveRight();
+        lock.unlock();
     }
 
     public void moveLeft() {
-        synchronized (points) {
-            camera.moveLeft();
-        }
+        lock.lock();
+        camera.moveLeft();
+        lock.unlock();
     }
 
     public void zoomUp() {
-        synchronized (points) {
-            camera.zoomUp();
-        }
+        lock.lock();
+        camera.zoomUp();
+        lock.unlock();
     }
 
     public void zoomDown() {
-        synchronized (points) {
-            camera.zoomDown();
-        }
+        lock.lock();
+        camera.zoomDown();
+        lock.unlock();
     }
 
     public void camUp() {
-        synchronized (points) {
-            camera.camUp();
-        }
+        lock.lock();
+        camera.camUp();
+        lock.unlock();
     }
 
     public void camDown() {
-        synchronized (points) {
-            camera.camDown();
-        }
+        lock.lock();
+        camera.camDown();
+        lock.unlock();
     }
 
     public void camRight() {
-        synchronized (points) {
-            camera.camRight();
-        }
+        lock.lock();
+        camera.camRight();
+        lock.unlock();
     }
 
     public void camLeft() {
-        synchronized (points) {
-            camera.camLeft();
-        }
+        lock.lock();
+        camera.camLeft();
+        lock.unlock();
     }
 }

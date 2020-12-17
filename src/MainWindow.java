@@ -1,11 +1,10 @@
-import geometry.Line;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MainWindow extends JFrame {
 
-    MainWindow(Line line, Model model) {
+    MainWindow(ReentrantLock lock, Model model) {
         Color background = new Color(50, 50, 50);
 
         this.setSize(1100, 850);
@@ -15,8 +14,11 @@ public class MainWindow extends JFrame {
         this.getContentPane().setBackground(background);
 
         int settingsWidth = 300;
-        this.add(new View(line, settingsWidth), BorderLayout.WEST);
+        View view = new View(lock, settingsWidth);
+        this.add(view, BorderLayout.WEST);
         this.add(new SettingsPanel(model), BorderLayout.EAST);
         this.setVisible(true);
+
+        model.setView(view);
     }
 }

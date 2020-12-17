@@ -250,6 +250,9 @@ public class SettingsPanel extends JPanel {
         setSettings(changesButton);
         changesButton.addActionListener(actionEvent -> {
                 try {
+                    model.setVisible(EvaluateType.EULER, checkBoxEuler.isSelected());
+                    model.setVisible(EvaluateType.RUNGE, checkBoxRunge.isSelected());
+                    model.setVisible(EvaluateType.ADAMS, checkBoxAdams.isSelected());
                     double rho = Double.parseDouble(rhoText.getText());
                     double sigma = Double.parseDouble(sigmaText.getText());
                     double beta = Double.parseDouble(betaText.getText());
@@ -258,6 +261,9 @@ public class SettingsPanel extends JPanel {
                 } catch (NumberFormatException ignored) {
 
                 } finally {
+                    checkBoxEuler.setSelected(model.getVisible(EvaluateType.EULER));
+                    checkBoxRunge.setSelected(model.getVisible(EvaluateType.RUNGE));
+                    checkBoxAdams.setSelected(model.getVisible(EvaluateType.ADAMS));
                     rhoText.setText(formatNumber(model.getRho()));
                     sigmaText.setText(formatNumber(model.getSigma()));
                     betaText.setText(formatNumber(model.getBeta()));
