@@ -19,7 +19,7 @@ public class SettingsPanel extends JPanel {
         component.setBorder(border);
         component.setBorder(BorderFactory.createCompoundBorder(
                 component.getBorder(),
-                BorderFactory.createEmptyBorder(5, 16, 5, 0)));
+                BorderFactory.createEmptyBorder(3, 16, 3, 0)));
         component.setOpaque(true);
         if (component instanceof JTextField) {
             ((JTextField) component).setCaretColor(Color.WHITE);
@@ -61,7 +61,7 @@ public class SettingsPanel extends JPanel {
                 controlText.getBorder(),
                 BorderFactory.createEmptyBorder(8, 16, 8, 0)));
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(controlText, c);
         this.add(controlText);
         c.insets = new Insets(0, 0, 0, 0);
@@ -79,7 +79,7 @@ public class SettingsPanel extends JPanel {
                 systemText.getBorder(),
                 BorderFactory.createEmptyBorder(8, 16, 8, 0)));
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(systemText, c);
         this.add(systemText);
         c.insets = new Insets(0, 0, 0, 0);
@@ -111,7 +111,7 @@ public class SettingsPanel extends JPanel {
             }
         });
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(speedButton, c);
         this.add(speedButton);
         c.insets = new Insets(0, 0, 0, 0);
@@ -171,7 +171,7 @@ public class SettingsPanel extends JPanel {
             }
         });
         c.gridwidth = 2;
-        c.insets = new Insets(0, 0, 14, 0);
+        c.insets = new Insets(0, 0, 10, 0);
         gridBag.setConstraints(startButton, c);
         this.add(startButton);
         c.insets = new Insets(0, 0, 0, 0);

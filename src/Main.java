@@ -1,5 +1,3 @@
-import geometry.Line;
-
 import javax.swing.*;
 import java.util.concurrent.locks.ReentrantLock;
 
